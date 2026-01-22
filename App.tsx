@@ -54,28 +54,32 @@ const App: React.FC = () => {
     setCollectedLetters(prev => {
       const nextIndex = prev.length;
       if (nextIndex < targetWord.length && letter === targetWord[nextIndex]) {
-        const newList = [...prev, letter];
-        
-        // Check if this collection completes the word
-        if (newList.length === targetWord.length) {
-          // Double score bonus!
-          setScore(s => s * 2);
-          setShowBonus(true);
-          setTimeout(() => setShowBonus(false), 2000);
-          
-          // Pick new word after a short delay to let the user see completion
-          setTimeout(() => {
-            const nextWord = WORDS[Math.floor(Math.random() * WORDS.length)];
-            setTargetWord(nextWord);
-            setCollectedLetters([]);
-          }, 500);
-        }
-        
-        return newList;
+        return [...prev, letter];
       }
       return prev;
     });
   }, [targetWord]);
+
+  // Unified effect for word completion and cycling
+  useEffect(() => {
+    if (targetWord && collectedLetters.length === targetWord.length) {
+      // 1. Reward the player: Double the score
+      setScore(prev => prev * 2);
+      
+      // 2. Visual fanfare
+      setShowBonus(true);
+      
+      // 3. Cycle to next word after a short celebration
+      const cycleTimeout = setTimeout(() => {
+        setShowBonus(false);
+        const nextWordIndex = Math.floor(Math.random() * WORDS.length);
+        setTargetWord(WORDS[nextWordIndex]);
+        setCollectedLetters([]);
+      }, 1500);
+
+      return () => clearTimeout(cycleTimeout);
+    }
+  }, [collectedLetters, targetWord]);
 
   return (
     <div className="relative w-screen h-screen bg-neutral-900 overflow-hidden select-none">
@@ -106,7 +110,10 @@ const App: React.FC = () => {
           <p>W / ↑ : Increase Speed</p>
           <p>S / ↓ : Brake</p>
           <p>A / D / ← / → : Change Lanes</p>
-          <p className="mt-2 text-yellow-400 font-bold uppercase tracking-tighter">Word Multiplier Active: Complete words for 2x Score!</p>
+          <div className="mt-2 text-yellow-400 font-bold uppercase tracking-tighter flex items-center gap-2">
+            <span className="w-2 h-2 bg-yellow-400 rounded-full animate-ping"></span>
+            Multiplier Ready: Double Score on Completion!
+          </div>
         </div>
       )}
     </div>

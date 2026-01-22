@@ -1,0 +1,5 @@
+{
+  "name": "NitroSim 2D",
+  "description": "A high-performance 2D top-down car simulator with realistic physics, steering, and track boundaries.",
+  "requestFramePermissions": []
+}

@@ -10,6 +10,7 @@ export const PHYSICS = {
   ENEMY_MIN_SPEED: 4,
   ENEMY_MAX_SPEED: 8,
   SPAWN_CHANCE: 0.015,
+  LETTER_SPAWN_CHANCE: 0.01,
 };
 
 export const COLORS = {
@@ -19,7 +20,11 @@ export const COLORS = {
   PLAYER: '#e63946',
   ENEMIES: ['#f4a261', '#2a9d8f', '#e9c46a', '#457b9d', '#9b5de5'],
   CAR_DETAIL: '#1d3557',
+  LETTER_BG: '#ffd700',
+  LETTER_TEXT: '#000000',
 };
 
 export const ROAD_WIDTH = 450;
 export const LANES = 4;
+
+export const WORDS = ["NITRO", "SPEED", "FAST", "RACE", "DRIVE", "TURBO", "GEMINI"];

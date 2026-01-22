@@ -18,6 +18,14 @@ export interface Enemy {
   color: string;
 }
 
+export interface CollectibleLetter {
+  id: number;
+  x: number;
+  y: number;
+  letter: string;
+  size: number;
+}
+
 export interface Keys {
   forward: boolean;
   backward: boolean;
